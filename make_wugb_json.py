@@ -86,9 +86,9 @@ if __name__ == '__main__':
     url_path = os.path.join(abs_bw_dir, URL_FILENAME)
     url_str = f"{WUGB_MAIN}/#?genome={genome_type}&hub={local_url}"
     with open(url_path, "w") as ofh:
-        ofh.write(url_str, "\n")
+        ofh.write(f"{url_str}\n")
 
-    # Print `url_str` on stdout
-    print(f"JSON file is saved at: '{json_filename}'")
+    # Print `json_path` and `url_str` on stdout
+    print(f"JSON file is saved at: '{json_path}'")
     print(f"View it at: {url_str}")
-    print(f"URL is saved at: '{url_filename}'")
+    print(f"URL is saved at: '{url_path}'")
