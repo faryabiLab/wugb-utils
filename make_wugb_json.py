@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 
 """
-This script scans a sub-directory of `/mnt/data1/www/html` on `plutus`
+This script scans a directory located in `/mnt/data1/www/html` on `plutus`
 (128.91.213.129), and saves a JSON file that includes all bigWig (bw)
-files in the sub-directory. The JSON file can be loaded by Washington
-University Genome Browser (WUGB).
+files in this directory.
+
+The output JSON file can be loaded directly into Washington University
+Genome Browser (WUGB).
 
 Two arguments are required by the script:
   * genome type, such as `hg19` or `hg38`
-  * sub-directory name
+  * directory name
 
-Two new files will be generated in the sub-directory:
+Two new files will be generated in the input directory:
   * `wugb.json`: JSON file for WUGB
-  * `wugb_url.txt`: the URL of WUGB
+  * `wugb_url.txt`: the URL of WUGB (also shown at the end of this program)
 """
 
 import json
@@ -52,7 +54,8 @@ def chk_bw_dir(dir_name):
 # Main
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print("Usage: make_wugb_json.py [genome_type] [input_directory]")
+        print("Usage:   make_wugb_json.py [genome_type] [input_directory]")
+        print("Example: make_wugb_json.py hg38 my_data")
         sys.exit(1)
 
     genome_type = sys.argv[1]
