@@ -21,8 +21,8 @@ import sys
 
 # Web server config
 LOCAL_ROOT = "/mnt/data1/www/html/"
-LOCAL_HTTP_MAIN = "http://faryabi05.med.upenn.edu/"
-WUGB_MAIN = "https://epigenomegateway.wustl.edu/browser"
+LOCAL_URL = "http://faryabi05.med.upenn.edu/"
+WUGB_URL = "https://epigenomegateway.wustl.edu/browser/"
 
 # Output filenames
 JSON_FILENAME = "wugb.json"
@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
             abs_file_path = os.path.join(root, f)
             sub_url = os.path.relpath(abs_file_path, start=LOCAL_ROOT)
-            local_url = LOCAL_HTTP_MAIN + sub_url
+            local_url = LOCAL_URL + sub_url
             hub_entry = dict()
             hub_entry["type"] = "bigwig"
             hub_entry["url"] = local_url
@@ -84,11 +84,11 @@ if __name__ == '__main__':
     with open(json_path, "w") as ofh:
         json.dump(wugb_hub, ofh, indent=2)
 
-    json_url = LOCAL_HTTP_MAIN + os.path.relpath(json_path, start=LOCAL_ROOT)
+    json_url = LOCAL_URL + os.path.relpath(json_path, start=LOCAL_ROOT)
 
     # Create `wugb_url.txt` in `bw_dir`:
     url_path = os.path.join(abs_bw_dir, URL_FILENAME)
-    url_str = f"{WUGB_MAIN}/#?genome={genome_type}&hub={local_url}"
+    url_str = f"{WUGB_URL}#?genome={genome_type}&hub={json_url}"
     with open(url_path, "w") as ofh:
         ofh.write(f"{url_str}\n")
 
