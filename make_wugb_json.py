@@ -88,7 +88,7 @@ if __name__ == '__main__':
 
     # Create `wugb_url.txt` in `bw_dir`:
     url_path = os.path.join(abs_bw_dir, URL_FILENAME)
-    url_str = f"{WUGB_URL}#?genome={genome_type}&hub={json_url}"
+    url_str = f"{WUGB_URL}?genome={genome_type}&hub={json_url}"
     with open(url_path, "w") as ofh:
         ofh.write(f"{url_str}\n")
 
