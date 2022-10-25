@@ -42,7 +42,7 @@ def chk_bw_dir(dir_name):
         print(f"ERROR: '{dir_name}' is not a directory")
         sys.exit(2)
 
-    if not abs_path.startswith(HTML_ROOT):
+    if not abs_path.startswith(LOCAL_SERVER_ROOT):
         print(f"ERROR: '{dir_name}' is not located in '{LOCAL_SERVER_ROOT}'")
         sys.exit(3)
 
