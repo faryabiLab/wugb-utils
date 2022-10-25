@@ -35,7 +35,7 @@ def syntax():
         print("  make_wugb_json.py [genome_type] [data_directory]\n")
 
         print("For example:")
-        print("  make_wugb_json.py hg38 my_data_dir")
+        print("  make_wugb_json.py hg38 my_data")
 
 
 def chk_bw_dir(dir_name):
