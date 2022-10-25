@@ -32,10 +32,10 @@ URL_FILENAME = "wugb_url.txt"
 
 def syntax():
         print("Syntax:")
-        print("  make_wugb_json.py [genome_type] [input_directory]\n")
+        print("  make_wugb_json.py [genome_type] [data_directory]\n")
 
-        print("Example:")
-        print("  make_wugb_json.py hg38 my_data")
+        print("For example:")
+        print("  make_wugb_json.py hg38 my_data_dir")
 
 
 def chk_bw_dir(dir_name):
