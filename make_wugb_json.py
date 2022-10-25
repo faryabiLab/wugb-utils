@@ -62,7 +62,7 @@ if __name__ == '__main__':
     wugb_hub = list()
     for root, _, files in os.walk(abs_bw_dir):
         # Make sure `root` is accessible by all users
-        os.chmod(root, 0755)
+        os.chmod(root, 0o755)
 
         for f in files:
             if not f.endswith(".bw"):
