@@ -22,7 +22,7 @@ import sys
 # Web server config
 LOCAL_ROOT = "/mnt/data1/www/html/"
 LOCAL_URL = "http://faryabi05.med.upenn.edu/"
-WUGB_URL = "https://epigenomegateway.wustl.edu/browser/"
+WUGB_URL = "http://epigenomegateway.wustl.edu/browser/"
 
 # Output filenames
 JSON_FILENAME = "wugb.json"
@@ -93,6 +93,6 @@ if __name__ == '__main__':
         ofh.write(f"{url_str}\n")
 
     # Print `json_path` and `url_str` on stdout
-    print(f"JSON file is saved at: '{json_path}'")
+    print(f"JSON file is saved as: {json_path}")
     print(f"View it at: {url_str}")
-    print(f"URL is saved at: '{url_path}'")
+    print(f"URL is saved as: {url_path}")
