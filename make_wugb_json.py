@@ -79,13 +79,13 @@ if __name__ == '__main__':
 
     # Create `wugb.json` in `bw_dir`
     json_path = os.path.join(abs_bw_dir, JSON_FILENAME)
-    with open(json_filename, "w") as ofh:
+    with open(json_path, "w") as ofh:
         json.dump(wugb_hub, ofh, indent=2)
 
     # Create `wugb_url.txt` in `bw_dir`:
     url_path = os.path.join(abs_bw_dir, URL_FILENAME)
     url_str = f"{WUGB_MAIN}/#?genome={genome_type}&hub={local_url}"
-    with open(url_filename, "w") as ofh:
+    with open(url_path, "w") as ofh:
         ofh.write(url_str, "\n")
 
     # Print `url_str` on stdout
