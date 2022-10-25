@@ -77,6 +77,8 @@ if __name__ == '__main__':
             hub_entry["name"] = f.split('.')[0]
             hub_entry["showOnHubLoad"] = True
 
+            wugb_hub.append(hub_entry) # add entry to hub
+
     # Create `wugb.json` in `bw_dir`
     json_path = os.path.join(abs_bw_dir, JSON_FILENAME)
     with open(json_path, "w") as ofh:
