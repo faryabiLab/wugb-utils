@@ -20,7 +20,7 @@ import os
 import sys
 
 # Web server config
-LOCAL_SERVER_ROOT = "/mnt/data1/www/html/"
+LOCAL_ROOT = "/mnt/data1/www/html/"
 LOCAL_HTTP_MAIN = "http://faryabi05.med.upenn.edu/"
 WUGB_MAIN = "https://epigenomegateway.wustl.edu/browser"
 
@@ -32,7 +32,7 @@ def chk_bw_dir(dir_name):
     """
     Check whether:
      * `dir_name` is a directory
-     * `dirname` is a sub-directory of `LOCAL_SERVER_ROOT`
+     * `dirname` is a sub-directory of `LOCAL_ROOT`
 
     Return the absolute path of `dir_name`.
     """
@@ -42,8 +42,8 @@ def chk_bw_dir(dir_name):
         print(f"ERROR: '{dir_name}' is not a directory")
         sys.exit(2)
 
-    if not abs_path.startswith(LOCAL_SERVER_ROOT):
-        print(f"ERROR: '{dir_name}' is not located in '{LOCAL_SERVER_ROOT}'")
+    if not abs_path.startswith(LOCAL_ROOT):
+        print(f"ERROR: '{dir_name}' is not located in '{LOCAL_ROOT}'")
         sys.exit(3)
 
     return abs_path
@@ -69,7 +69,7 @@ if __name__ == '__main__':
                 continue
 
             abs_file_path = os.path.join(root, f)
-            sub_url = os.path.relpath(abs_file_path, start=LOCAL_SERVER_ROOT)
+            sub_url = os.path.relpath(abs_file_path, start=LOCAL_ROOT)
             local_url = LOCAL_HTTP_MAIN + sub_url
             hub_entry = dict()
             hub_entry["type"] = "bigwig"
@@ -81,6 +81,8 @@ if __name__ == '__main__':
     json_path = os.path.join(abs_bw_dir, JSON_FILENAME)
     with open(json_path, "w") as ofh:
         json.dump(wugb_hub, ofh, indent=2)
+
+    json_url = LOCAL_HTTP_MAIN + os.path.relpath(json_path, start=LOCAL_ROOT)
 
     # Create `wugb_url.txt` in `bw_dir`:
     url_path = os.path.join(abs_bw_dir, URL_FILENAME)
