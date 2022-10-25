@@ -54,7 +54,7 @@ def chk_bw_dir(dir_name):
 # Main
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print("Usage:   make_wugb_json.py [genome_type] [input_directory]")
+        print("Usage:   make_wugb_json.py [genome_type] [input_directory]\n")
         print("Example: make_wugb_json.py hg38 my_data")
         sys.exit(1)
 
