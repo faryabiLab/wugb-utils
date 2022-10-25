@@ -30,6 +30,14 @@ WUGB_URL = "http://epigenomegateway.wustl.edu/browser/"
 JSON_FILENAME = "wugb.json"
 URL_FILENAME = "wugb_url.txt"
 
+def syntax():
+        print("Syntax:")
+        print("  make_wugb_json.py [genome_type] [input_directory]\n")
+
+        print("Example:")
+        print("  make_wugb_json.py hg38 my_data")
+
+
 def chk_bw_dir(dir_name):
     """
     Check whether:
@@ -54,8 +62,7 @@ def chk_bw_dir(dir_name):
 # Main
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print("Usage:   make_wugb_json.py [genome_type] [input_directory]\n")
-        print("Example: make_wugb_json.py hg38 my_data")
+        syntax()
         sys.exit(1)
 
     genome_type = sys.argv[1]
