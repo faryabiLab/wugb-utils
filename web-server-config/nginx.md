@@ -19,7 +19,7 @@ sudo apt install nginx
 2. Create a new server config file `genome-data-server.conf` in
    `/etc/nginx/sites-available/` directory:
 
-   ```
+   ```config
    # Web server that serves files for WashU Genome Browser
    #
    server {
@@ -32,8 +32,8 @@ sudo apt install nginx
        index index.html index.htm;
 
        location / {
-	       # First attempt to serve request as file, then
-		   # as directory, then fall back to displaying a 404.
+           # First attempt to serve request as file, then
+           # as directory, then fall back to displaying a 404.
 	       try_files $uri $uri/ =404;
 
 	       # Enable list of files in directory
@@ -46,12 +46,18 @@ sudo apt install nginx
    }
    ```
 
+3. Create a symlink of the new config file:
+   ```shell
+   cd /etc/nginx/sites-enabled
+   ln -s ../sites-available/genome-data-server.conf .
+   ```
+
 3. Reload the new server config:
    ```shell
    systemctl reload nginx.service
    ```
 
-4. Check the web site to confirm that it works. If it doesn't work, use
+4. Check the web site to confirm that it works. If it doesn't work, use:
    ```shell
    systemctl status nginx.service
    ```
