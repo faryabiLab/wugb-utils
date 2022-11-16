@@ -1,10 +1,10 @@
 
-# Nginx web server configuration (`sudo` privilege needed)
+## Nginx web server configuration (`sudo` privilege needed)
 
 ### Installation
 
 ```
-sudo apt install nginx
+apt install nginx
 ```
 
 ### Configuration
@@ -57,8 +57,8 @@ sudo apt install nginx
    systemctl reload nginx.service
    ```
 
-4. Check the web site to confirm that it works. If it doesn't work, use:
+4. Check the website to confirm that it works. Use this command for
+   troubleshooting:
    ```shell
    systemctl status nginx.service
    ```
-   for troubleshooting.
