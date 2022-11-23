@@ -39,9 +39,9 @@ servers = {
 
 # Types of data that will be rendered in WashU Genome Browser
 data_types = {
-    'bw': 'bigwig',
-    'cool': 'cool',
-    'hic': 'hic',
+    '.bw': 'bigwig',
+    '.cool': 'cool',
+    '.hic': 'hic',
 }
 
 # Main URL of WUGB
