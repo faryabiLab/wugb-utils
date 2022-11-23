@@ -59,11 +59,11 @@ def syntax():
     print("  make_wugb_json.py hg38 my_data")
 
 
-def chk_data_dir(dir_name):
+def chk_data_dir(dir_name, data_root):
     """
     Check whether:
      * `dir_name` is a directory
-     * `dirname` is a sub-directory of `LOCAL_ROOT`
+     * `dirname` is a sub-directory of `data_root`
 
     Return the absolute path of `dir_name`.
     """
@@ -73,8 +73,8 @@ def chk_data_dir(dir_name):
         print(f"ERROR: '{dir_name}' is not a directory")
         sys.exit(2)
 
-    if not abs_path.startswith(LOCAL_ROOT):
-        print(f"ERROR: '{dir_name}' is not located in '{LOCAL_ROOT}'")
+    if not abs_path.startswith(data_root):
+        print(f"ERROR: '{dir_name}' is not located in '{data_root}'")
         sys.exit(3)
 
     return abs_path
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     genome_type = sys.argv[1]
     data_dir = sys.argv[2]
 
-    abs_data_dir = chk_data_dir(data_dir)
+    abs_data_dir = chk_data_dir(data_dir, www_root)
     wugb_hub = list()
     for root, _, files in os.walk(abs_data_dir):
         # Make sure `root` is accessible by all users
