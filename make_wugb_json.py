@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 """
-This script scans a directory located in `/mnt/data1/www/html` on `plutus`
-(128.91.213.129), and saves a JSON file that includes all bigWig (bw)
-files in this directory.
+This script scans a web server's directory (based on `servers` dict),
+and saves a JSON file that includes all supported data files in this
+directory.
 
 The output JSON file can be loaded directly into Washington University
 Genome Browser (WUGB).
@@ -19,11 +19,32 @@ Two new files will be generated in the input directory:
 
 import json
 import os
+import socket
 import sys
 
-# Web server config
-LOCAL_ROOT = "/mnt/data1/www/html/"
-LOCAL_URL = "http://faryabi05.med.upenn.edu/"
+# Web servers config
+servers = {
+    # Config on plutus
+    'plutus': {
+        'www_root': '/mnt/data1/www/html/',
+        'main_url': 'http://faryabi05.med.upenn.edu/',
+    },
+
+    # Config on simurgh
+    'simurgh': {
+        'www_root': '/mnt/data0/www/html/',
+        'main_url': 'http://faryabi17.pmacs.upenn.edu/',
+    },
+}
+
+# Types of data that will be rendered in WashU Genome Browser
+data_types = {
+    'bw': 'bigwig',
+    'cool': 'cool',
+    'hic': 'hic',
+}
+
+# Main URL of WUGB
 WUGB_URL = "http://epigenomegateway.wustl.edu/browser/"
 
 # Output filenames
@@ -31,14 +52,14 @@ JSON_FILENAME = "wugb.json"
 URL_FILENAME = "wugb_url.txt"
 
 def syntax():
-        print("Syntax:")
-        print("  make_wugb_json.py [genome_type] [data_directory]\n")
+    print("Syntax:")
+    print("  make_wugb_json.py [genome_type] [data_directory]\n")
 
-        print("For example:")
-        print("  make_wugb_json.py hg38 my_data")
+    print("For example:")
+    print("  make_wugb_json.py hg38 my_data")
 
 
-def chk_bw_dir(dir_name):
+def chk_data_dir(dir_name):
     """
     Check whether:
      * `dir_name` is a directory
@@ -65,39 +86,57 @@ if __name__ == '__main__':
         syntax()
         sys.exit(1)
 
-    genome_type = sys.argv[1]
-    bw_dir = sys.argv[2]
+    # Exit if the server is not found in `servers`
+    server_name = socket.gethostname()
+    if server_name not in servers:
+        print(f"ERROR: '{server_name}' not supported")
+        sys.exit(3)
 
-    abs_bw_dir = chk_bw_dir(bw_dir)
+    www_root = servers[server_name]['www_root']
+    main_url = servers[server_name]['main_url']
+
+    genome_type = sys.argv[1]
+    data_dir = sys.argv[2]
+
+    abs_data_dir = chk_data_dir(data_dir)
     wugb_hub = list()
-    for root, _, files in os.walk(abs_bw_dir):
+    for root, _, files in os.walk(abs_data_dir):
         # Make sure `root` is accessible by all users
         os.chmod(root, 0o755)
 
         for f in files:
-            if not f.endswith(".bw"):
+            # Skip the files whose types are not supported
+            _, f_type = os.path.splitext(f)
+            if f_type not in data_types:
                 continue
 
             abs_file_path = os.path.join(root, f)
-            sub_url = os.path.relpath(abs_file_path, start=LOCAL_ROOT)
-            local_url = LOCAL_URL + sub_url
+            sub_url = os.path.relpath(abs_file_path, start=www_root)
+            data_url = main_url + sub_url
             hub_entry = dict()
-            hub_entry["type"] = "bigwig"
-            hub_entry["url"] = local_url
+            hub_entry["type"] = data_types[f_type]
+            hub_entry["url"] = data_url
             hub_entry["name"] = f.split('.')[0]
             hub_entry["showOnHubLoad"] = True
 
+            # Special options for `cool` and `hic` data types, see:
+            # https://epigenomegateway.readthedocs.io/en/latest/datahub.html#example-hic-track
+            if f_type in ['cool', 'hic']:
+                hub_entry['options'] = {
+                    'displayMode': 'arc',
+                }
+
             wugb_hub.append(hub_entry) # add entry to hub
 
-    # Create `wugb.json` in `bw_dir`
-    json_path = os.path.join(abs_bw_dir, JSON_FILENAME)
+    # Create `wugb.json` in `data_dir`
+    json_path = os.path.join(abs_data_dir, JSON_FILENAME)
     with open(json_path, "w") as ofh:
         json.dump(wugb_hub, ofh, indent=2)
 
-    json_url = LOCAL_URL + os.path.relpath(json_path, start=LOCAL_ROOT)
+    json_url = main_url + os.path.relpath(json_path, start=www_root)
 
     # Create `wugb_url.txt` in `bw_dir`:
-    url_path = os.path.join(abs_bw_dir, URL_FILENAME)
+    url_path = os.path.join(abs_data_dir, URL_FILENAME)
     url_str = f"{WUGB_URL}?genome={genome_type}&hub={json_url}"
     with open(url_path, "w") as ofh:
         ofh.write(f"{url_str}\n")
