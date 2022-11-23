@@ -4,8 +4,9 @@ Ths repository includes some utilities for **Washington University Genome Browse
 
 ### 1. `make_wugb_json.py`
 
-This script scans a directory located in `/mnt/data1/www/html` on `plutus` (128.91.213.129), and saves a JSON file that includes all *bigWig* (*bw*)
-files in this directory.
+This script scans a web server's directory (based on `servers` dict),
+and saves a JSON file that includes all supported data files in this
+directory.
 
 The output JSON file can be loaded directly into WUGB.
 
