@@ -24,13 +24,13 @@ import sys
 
 # Web servers config
 servers = {
-    # Config on plutus
+    # plutus
     'plutus': {
         'www_root': '/mnt/data1/www/html/',
         'main_url': 'http://faryabi05.med.upenn.edu/',
     },
 
-    # Config on simurgh
+    # simurgh
     'simurgh': {
         'www_root': '/mnt/data0/www/html/',
         'main_url': 'http://faryabi17.pmacs.upenn.edu/',
@@ -107,7 +107,6 @@ if __name__ == '__main__':
         for f in files:
             # Skip the files whose types are not supported
             _, f_type = os.path.splitext(f)
-            print(f"dhu: f_type is '{f_type}'")
             if f_type not in data_types:
                 continue
 
@@ -133,6 +132,7 @@ if __name__ == '__main__':
     json_path = os.path.join(abs_data_dir, JSON_FILENAME)
     with open(json_path, "w") as ofh:
         json.dump(wugb_hub, ofh, indent=2)
+        ofh.write("\n")  # end the JSON file with a newline character
 
     json_url = main_url + os.path.relpath(json_path, start=www_root)
 
