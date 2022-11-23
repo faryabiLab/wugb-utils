@@ -107,6 +107,7 @@ if __name__ == '__main__':
         for f in files:
             # Skip the files whose types are not supported
             _, f_type = os.path.splitext(f)
+            print("dhu: f_type is '{f_type}'")
             if f_type not in data_types:
                 continue
 
