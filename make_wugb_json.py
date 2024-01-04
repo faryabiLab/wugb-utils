@@ -27,13 +27,13 @@ servers = {
     # plutus
     'plutus': {
         'www_root': '/mnt/data1/www/html/',
-        'main_url': 'http://faryabi05.med.upenn.edu/',
+        'main_url': 'https://plutus.faryabilab.com/',
     },
 
     # simurgh
     'simurgh': {
         'www_root': '/mnt/data0/www/html/',
-        'main_url': 'http://faryabi17.pmacs.upenn.edu/',
+        'main_url': 'https://simurgh.faryabilab.com/',
     },
 }
 
@@ -45,7 +45,7 @@ data_types = {
 }
 
 # Main URL of WUGB
-WUGB_URL = "http://epigenomegateway.wustl.edu/browser/"
+WUGB_URL = "https://epigenomegateway.wustl.edu/browser/"
 
 # Output filenames
 JSON_FILENAME = "wugb.json"
