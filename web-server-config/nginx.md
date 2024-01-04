@@ -62,3 +62,5 @@ apt install nginx
    ```shell
    systemctl status nginx.service
    ```
+
+5. (Optional) To serve HTTPS using `certbot`, see: https://certbot.eff.org/
